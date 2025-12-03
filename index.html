@@ -125,6 +125,31 @@
       .mobile-menu.open {
         max-height: 300px;
       }
+      /* Gallery Modal Styles */
+      .gallery-slide {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        transform: translateX(100px) scale(0.95);
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        pointer-events: none;
+      }
+      .gallery-slide.active {
+        position: relative;
+        opacity: 1;
+        transform: translateX(0) scale(1);
+        pointer-events: auto;
+      }
+      .gallery-slide.prev {
+        transform: translateX(-100px) scale(0.95);
+      }
+      .gallery-dot.active {
+        background: white;
+        transform: scale(1.3);
+      }
+      #gallery-modal.flex {
+        display: flex;
+      }
     </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark font-display text-text-primary dark:text-gray-200">
@@ -152,9 +177,6 @@
 <a class="nav-link text-text-primary dark:text-gray-300 dark:hover:text-white text-sm font-medium leading-normal transition-colors" href="#premium">프리미엄</a>
 <a class="nav-link text-text-primary dark:text-gray-300 dark:hover:text-white text-sm font-medium leading-normal transition-colors" href="#faq">FAQ</a>
 </nav>
-<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-11 px-6 gradient-bg text-white text-sm font-bold leading-normal tracking-[0.015em] shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 transition-all duration-300 hover:scale-105">
-<span class="truncate">도입 문의</span>
-</button>
 </div>
 <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
 <span class="material-symbols-outlined text-3xl">menu</span>
@@ -167,7 +189,6 @@
 <a class="text-text-primary dark:text-gray-300 text-base font-medium py-2" href="#features" onclick="closeMobileMenu()">핵심 기능</a>
 <a class="text-text-primary dark:text-gray-300 text-base font-medium py-2" href="#premium" onclick="closeMobileMenu()">프리미엄</a>
 <a class="text-text-primary dark:text-gray-300 text-base font-medium py-2" href="#faq" onclick="closeMobileMenu()">FAQ</a>
-<button class="w-full gradient-bg text-white text-sm font-bold py-3 rounded-full mt-2">도입 문의</button>
 </nav>
 </div>
 </header>
@@ -180,8 +201,11 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-8 lg:px-10 relative z-10">
 <div class="@container">
 <div class="flex flex-col gap-10 lg:flex-row-reverse lg:items-center">
-<div class="w-full lg:w-1/2 animate-float">
-<div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-2xl shadow-2xl shadow-primary/20" data-alt="A clean, abstract graphic representing data and health" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDGj6TdGyuj11_eOVBxJO12Ui1HbG1zh1y5D3Krm13LY1-Vrytlbsn0wL2fsI_VNjWVj_qSIGYz8Bg1RZ_6Bn_tF3f7sMo_NMTVaq5mwpr8DgMwoYAmEXUGw9gtYIxgVJXt-jA0cljPGiXN08EO10zsmO9dNO5DityTdej8bMUvvQsAzXW_ymLeAMeHXVJqTdSU67WWILpgrvz3f7hm1qoqAUCvZT0ozO1yHC2X_8QZvw-JqKv71XgRwx6LuIrY0adG1lP25QF8epXY");'></div>
+<div class="w-full lg:w-1/2 animate-float flex justify-center">
+<div class="relative">
+<div class="absolute -inset-4 bg-gradient-to-r from-primary/30 to-indigo-500/30 rounded-[3rem] blur-2xl"></div>
+<img src="assets/images/홈.png" alt="케어 내비 홈 화면" class="relative w-[280px] h-auto rounded-[2rem] shadow-2xl shadow-primary/30 border-4 border-gray-800"/>
+</div>
 </div>
 <div class="flex flex-col gap-8 lg:w-1/2">
 <div class="flex flex-col gap-5 text-left">
@@ -198,13 +222,9 @@
 </p>
 </div>
 <div class="flex flex-col sm:flex-row gap-4">
-<button class="flex items-center justify-center gap-2 rounded-full h-14 px-8 gradient-bg text-white text-base font-bold shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 transition-all duration-300 hover:scale-105">
+<button id="open-gallery-btn" class="flex items-center justify-center gap-2 rounded-full h-14 px-8 gradient-bg text-white text-base font-bold shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 transition-all duration-300 hover:scale-105">
 <span>시작하기</span>
 <span class="material-symbols-outlined text-xl">arrow_forward</span>
-</button>
-<button class="flex items-center justify-center gap-2 rounded-full h-14 px-8 bg-white dark:bg-gray-800 text-text-primary dark:text-white text-base font-bold border-2 border-gray-200 dark:border-gray-700 hover:border-primary dark:hover:border-primary transition-all duration-300">
-<span class="material-symbols-outlined text-xl text-primary">play_circle</span>
-<span>데모 영상 보기</span>
 </button>
 </div>
 <!-- Stats -->
@@ -357,10 +377,10 @@
 </div>
 </div>
 </div>
-<div class="lg:w-1/2 animate-on-scroll" style="animation-delay: 0.2s;">
+<div class="lg:w-1/2 animate-on-scroll flex justify-center" style="animation-delay: 0.2s;">
 <div class="relative">
-<div class="absolute -inset-4 bg-gradient-to-r from-primary/20 to-indigo-500/20 rounded-3xl blur-2xl"></div>
-<div class="relative w-full h-[450px] rounded-2xl bg-cover bg-center shadow-2xl" data-alt="Screenshot of the Care Navi dashboard on a desktop computer, showing charts and patient information." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC5QO0vgTZXGLYZIQ2xn4QSNGbg-DlNTghyP75PEL7FuPXXSkFWEhZzRlZRIoq0j764E7UsooV-ukoU1MFKchovA5z3Z3KAiJUOQT0VO4GJH8nKgO-UzFMAaDid_0QuvxzG-SskqAczwW9m8s0ncoUlHg-Rm67Rgvf0BABhMlM1Yd62KjRNI2O15cRvHEX_2K6t0dD6JrziqnJ_JSkY6NaBduiZAhZ19QNcZ76moHXS0AlbFWWGWilESl6LdXliM5llbfS9gT8ZvlDN')"></div>
+<div class="absolute -inset-4 bg-gradient-to-r from-primary/30 to-indigo-500/30 rounded-[3rem] blur-2xl"></div>
+<img src="assets/images/기록 페이지.png" alt="케어 내비 기록 페이지" class="relative w-[280px] h-auto rounded-[2rem] shadow-2xl shadow-primary/30 border-4 border-gray-800"/>
 </div>
 </div>
 </div>
@@ -420,10 +440,10 @@
 </div>
 </div>
 </div>
-<div class="lg:w-1/2 animate-on-scroll" style="animation-delay: 0.2s;">
+<div class="lg:w-1/2 animate-on-scroll flex justify-center" style="animation-delay: 0.2s;">
 <div class="relative">
-<div class="absolute -inset-4 bg-gradient-to-r from-primary/20 to-indigo-500/20 rounded-3xl blur-2xl"></div>
-<div class="relative w-full h-[400px] bg-cover bg-center rounded-2xl shadow-2xl" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuClfs8gTi_NGjkeKGk3eFU22z9TGCWNk-tiQYJxJXwMO1AJ8FhiZl2Cpaezm8LrsOg5gxs3xUMSlDItkpPZ7Nj5SHnoVK_VdmRMD1y5_QmyrA4zLJm03F9xIf6eI06FSb7Ruf9_O9JHAYj-GTaZOh6xfbMT8urrWEcpsg-waiH2VIQmMXSQfa2q7A0rUeRshIhhBQJLWFJMBT5BHLg0gr_laR1b6734yCgTSNw-48uvNlU8GNbhJNm5xnAMyfMY6JLOQmVMPZyjAHD6')"></div>
+<div class="absolute -inset-4 bg-gradient-to-r from-primary/30 to-indigo-500/30 rounded-[3rem] blur-2xl"></div>
+<img src="assets/images/홈페이지 모달.png" alt="케어 내비 건강 정보 상세" class="relative w-[280px] h-auto rounded-[2rem] shadow-2xl shadow-primary/30 border-4 border-gray-800"/>
 </div>
 </div>
 </div>
@@ -436,15 +456,54 @@
 <div class="text-center mb-12 animate-on-scroll">
 <span class="inline-flex items-center gap-2 text-primary text-sm font-semibold tracking-wider uppercase mb-4">
 <span class="w-8 h-[2px] gradient-bg"></span>
-UI 데모
+앱 미리보기
 <span class="w-8 h-[2px] gradient-bg"></span>
 </span>
 <h2 class="text-3xl md:text-4xl font-bold text-text-primary dark:text-white">직관적인 사용자 경험</h2>
+<p class="text-text-secondary dark:text-gray-400 text-lg mt-4 max-w-2xl mx-auto">케어 내비 앱의 주요 화면들을 미리 만나보세요</p>
 </div>
 <div class="animate-on-scroll" style="animation-delay: 0.1s;">
-<div class="relative">
-<div class="absolute -inset-4 bg-gradient-to-r from-primary/20 to-indigo-500/20 rounded-3xl blur-2xl"></div>
-<div class="relative w-full h-[600px] rounded-2xl bg-cover bg-center shadow-2xl border border-gray-200 dark:border-gray-800" data-alt="UI Demo of the Care Navi application on a mobile phone" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC2uxuWoZewN7vXtBcVUgKiCeqWb6ICToBCbQBelUY_LIZTA4Fs_mhwdCJNzt8fnCFL-6lfdeE5iI9MLmFOdtDyeTTvj8aeCs0jsA-d1baC9vCp35jIEepjxAQsMJa-KTE0nIV-ZTCNALorPpTWr6yPOU0eHh-iPCesCF34kr0gVgaUEt2MzRz8_x1kzC4WM8tIHXZaa0jxb6nsIzqGNBtEVIGVKWtsPa8sh5ejGj8wFBqsSvzbfl3S5PsLci9b_86FbPEDdkEZVFF1')"></div>
+<div class="flex flex-wrap justify-center gap-6 md:gap-8">
+<!-- 홈 화면 -->
+<div class="flex flex-col items-center">
+<div class="relative group">
+<div class="absolute -inset-3 bg-gradient-to-r from-primary/30 to-indigo-500/30 rounded-[2.5rem] blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+<img src="assets/images/홈.png" alt="홈 화면" class="relative w-[180px] md:w-[200px] h-auto rounded-[1.5rem] shadow-xl border-2 border-gray-800 transition-transform duration-300 group-hover:scale-105"/>
+</div>
+<p class="mt-4 text-sm font-medium text-text-secondary dark:text-gray-400">홈</p>
+</div>
+<!-- 홈 모달 -->
+<div class="flex flex-col items-center">
+<div class="relative group">
+<div class="absolute -inset-3 bg-gradient-to-r from-primary/30 to-indigo-500/30 rounded-[2.5rem] blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+<img src="assets/images/홈페이지 모달.png" alt="건강 정보 상세" class="relative w-[180px] md:w-[200px] h-auto rounded-[1.5rem] shadow-xl border-2 border-gray-800 transition-transform duration-300 group-hover:scale-105"/>
+</div>
+<p class="mt-4 text-sm font-medium text-text-secondary dark:text-gray-400">건강 정보</p>
+</div>
+<!-- 기록 페이지 -->
+<div class="flex flex-col items-center">
+<div class="relative group">
+<div class="absolute -inset-3 bg-gradient-to-r from-primary/30 to-indigo-500/30 rounded-[2.5rem] blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+<img src="assets/images/기록 페이지.png" alt="기록 페이지" class="relative w-[180px] md:w-[200px] h-auto rounded-[1.5rem] shadow-xl border-2 border-gray-800 transition-transform duration-300 group-hover:scale-105"/>
+</div>
+<p class="mt-4 text-sm font-medium text-text-secondary dark:text-gray-400">기록</p>
+</div>
+<!-- 기록 모달 -->
+<div class="flex flex-col items-center">
+<div class="relative group">
+<div class="absolute -inset-3 bg-gradient-to-r from-primary/30 to-indigo-500/30 rounded-[2.5rem] blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+<img src="assets/images/기록페이지 모달.png" alt="기록 상세" class="relative w-[180px] md:w-[200px] h-auto rounded-[1.5rem] shadow-xl border-2 border-gray-800 transition-transform duration-300 group-hover:scale-105"/>
+</div>
+<p class="mt-4 text-sm font-medium text-text-secondary dark:text-gray-400">기록 상세</p>
+</div>
+<!-- 관리 페이지 -->
+<div class="flex flex-col items-center">
+<div class="relative group">
+<div class="absolute -inset-3 bg-gradient-to-r from-primary/30 to-indigo-500/30 rounded-[2.5rem] blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+<img src="assets/images/관리 페이지.png" alt="관리 페이지" class="relative w-[180px] md:w-[200px] h-auto rounded-[1.5rem] shadow-xl border-2 border-gray-800 transition-transform duration-300 group-hover:scale-105"/>
+</div>
+<p class="mt-4 text-sm font-medium text-text-secondary dark:text-gray-400">관리</p>
+</div>
 </div>
 </div>
 </div>
@@ -508,6 +567,91 @@ FAQ
 </section>
 </main>
 
+<!-- MVP Gallery Modal -->
+<div id="gallery-modal" class="fixed inset-0 z-[100] hidden items-center justify-center">
+<div class="absolute inset-0 bg-black/90 backdrop-blur-sm" id="gallery-overlay"></div>
+<div class="relative z-10 w-full max-w-md mx-4">
+<!-- Close Button -->
+<button id="close-gallery" class="absolute -top-12 right-0 text-white/80 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-4xl">close</span>
+</button>
+
+<!-- Gallery Container -->
+<div class="relative">
+<!-- Slides -->
+<div id="gallery-slides" class="relative flex flex-col items-center">
+<div class="gallery-slide active" data-index="0">
+<div class="relative">
+<div class="absolute -inset-4 bg-gradient-to-r from-primary/40 to-indigo-500/40 rounded-[3rem] blur-2xl"></div>
+<img src="assets/images/홈.png" alt="케어 내비 홈 화면" class="relative w-[300px] md:w-[340px] h-auto rounded-[2rem] shadow-2xl border-4 border-gray-700"/>
+</div>
+<div class="text-center mt-6">
+<h3 class="text-white text-xl font-bold mb-2">홈 화면</h3>
+<p class="text-white/70">환자의 건강 상태를 한눈에 파악할 수 있는 대시보드</p>
+</div>
+</div>
+<div class="gallery-slide" data-index="1">
+<div class="relative">
+<div class="absolute -inset-4 bg-gradient-to-r from-primary/40 to-indigo-500/40 rounded-[3rem] blur-2xl"></div>
+<img src="assets/images/홈페이지 모달.png" alt="케어 내비 홈 모달" class="relative w-[300px] md:w-[340px] h-auto rounded-[2rem] shadow-2xl border-4 border-gray-700"/>
+</div>
+<div class="text-center mt-6">
+<h3 class="text-white text-xl font-bold mb-2">건강 정보 상세</h3>
+<p class="text-white/70">개인별 맞춤 건강 정보와 복약 안내</p>
+</div>
+</div>
+<div class="gallery-slide" data-index="2">
+<div class="relative">
+<div class="absolute -inset-4 bg-gradient-to-r from-primary/40 to-indigo-500/40 rounded-[3rem] blur-2xl"></div>
+<img src="assets/images/기록 페이지.png" alt="케어 내비 기록 페이지" class="relative w-[300px] md:w-[340px] h-auto rounded-[2rem] shadow-2xl border-4 border-gray-700"/>
+</div>
+<div class="text-center mt-6">
+<h3 class="text-white text-xl font-bold mb-2">기록 페이지</h3>
+<p class="text-white/70">복약 기록과 건강 데이터를 체계적으로 관리</p>
+</div>
+</div>
+<div class="gallery-slide" data-index="3">
+<div class="relative">
+<div class="absolute -inset-4 bg-gradient-to-r from-primary/40 to-indigo-500/40 rounded-[3rem] blur-2xl"></div>
+<img src="assets/images/기록페이지 모달.png" alt="케어 내비 기록 모달" class="relative w-[300px] md:w-[340px] h-auto rounded-[2rem] shadow-2xl border-4 border-gray-700"/>
+</div>
+<div class="text-center mt-6">
+<h3 class="text-white text-xl font-bold mb-2">기록 상세</h3>
+<p class="text-white/70">상세한 복약 기록과 메모 기능</p>
+</div>
+</div>
+<div class="gallery-slide" data-index="4">
+<div class="relative">
+<div class="absolute -inset-4 bg-gradient-to-r from-primary/40 to-indigo-500/40 rounded-[3rem] blur-2xl"></div>
+<img src="assets/images/관리 페이지.png" alt="케어 내비 관리 페이지" class="relative w-[300px] md:w-[340px] h-auto rounded-[2rem] shadow-2xl border-4 border-gray-700"/>
+</div>
+<div class="text-center mt-6">
+<h3 class="text-white text-xl font-bold mb-2">관리 페이지</h3>
+<p class="text-white/70">약사를 위한 환자 관리 시스템</p>
+</div>
+</div>
+</div>
+
+<!-- Navigation Arrows -->
+<button id="prev-slide" class="absolute left-[-60px] top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur flex items-center justify-center transition-all hover:scale-110">
+<span class="material-symbols-outlined text-white text-2xl">chevron_left</span>
+</button>
+<button id="next-slide" class="absolute right-[-60px] top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur flex items-center justify-center transition-all hover:scale-110">
+<span class="material-symbols-outlined text-white text-2xl">chevron_right</span>
+</button>
+
+<!-- Dots -->
+<div class="flex justify-center gap-3 mt-8">
+<button class="gallery-dot active w-3 h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all" data-index="0"></button>
+<button class="gallery-dot w-3 h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all" data-index="1"></button>
+<button class="gallery-dot w-3 h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all" data-index="2"></button>
+<button class="gallery-dot w-3 h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all" data-index="3"></button>
+<button class="gallery-dot w-3 h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all" data-index="4"></button>
+</div>
+</div>
+</div>
+</div>
+
 <!-- Footer -->
 <footer class="bg-text-primary text-white">
 <div class="max-w-7xl mx-auto px-4 sm:px-8 lg:px-10 py-16">
@@ -529,7 +673,6 @@ FAQ
 <li><a class="hover:text-white transition-colors" href="#features">핵심 기능</a></li>
 <li><a class="hover:text-white transition-colors" href="#premium">프리미엄</a></li>
 <li><a class="hover:text-white transition-colors" href="#">보안</a></li>
-<li><a class="hover:text-white transition-colors" href="#">도입 문의</a></li>
 </ul>
 </div>
 <div>
@@ -614,6 +757,81 @@ window.addEventListener('scroll', () => {
       link.classList.add('text-primary');
     }
   });
+});
+
+// Gallery Modal
+const galleryModal = document.getElementById('gallery-modal');
+const openGalleryBtn = document.getElementById('open-gallery-btn');
+const closeGalleryBtn = document.getElementById('close-gallery');
+const galleryOverlay = document.getElementById('gallery-overlay');
+const prevSlideBtn = document.getElementById('prev-slide');
+const nextSlideBtn = document.getElementById('next-slide');
+const slides = document.querySelectorAll('.gallery-slide');
+const dots = document.querySelectorAll('.gallery-dot');
+
+let currentSlide = 0;
+const totalSlides = slides.length;
+
+function showSlide(index, direction = 'next') {
+  slides.forEach((slide, i) => {
+    slide.classList.remove('active', 'prev');
+    if (i === index) {
+      slide.classList.add('active');
+    } else if (direction === 'next' && i === (index - 1 + totalSlides) % totalSlides) {
+      slide.classList.add('prev');
+    } else if (direction === 'prev' && i === (index + 1) % totalSlides) {
+      // For prev direction, add no extra class
+    }
+  });
+
+  dots.forEach((dot, i) => {
+    dot.classList.toggle('active', i === index);
+  });
+
+  currentSlide = index;
+}
+
+function nextSlide() {
+  showSlide((currentSlide + 1) % totalSlides, 'next');
+}
+
+function prevSlide() {
+  showSlide((currentSlide - 1 + totalSlides) % totalSlides, 'prev');
+}
+
+function openGallery() {
+  galleryModal.classList.remove('hidden');
+  galleryModal.classList.add('flex');
+  document.body.style.overflow = 'hidden';
+  showSlide(0);
+}
+
+function closeGallery() {
+  galleryModal.classList.add('hidden');
+  galleryModal.classList.remove('flex');
+  document.body.style.overflow = '';
+}
+
+openGalleryBtn.addEventListener('click', openGallery);
+closeGalleryBtn.addEventListener('click', closeGallery);
+galleryOverlay.addEventListener('click', closeGallery);
+nextSlideBtn.addEventListener('click', nextSlide);
+prevSlideBtn.addEventListener('click', prevSlide);
+
+dots.forEach((dot, index) => {
+  dot.addEventListener('click', () => {
+    const direction = index > currentSlide ? 'next' : 'prev';
+    showSlide(index, direction);
+  });
+});
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+  if (!galleryModal.classList.contains('hidden')) {
+    if (e.key === 'ArrowRight') nextSlide();
+    if (e.key === 'ArrowLeft') prevSlide();
+    if (e.key === 'Escape') closeGallery();
+  }
 });
 </script>
 </body></html>
