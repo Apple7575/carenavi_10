@@ -324,7 +324,22 @@
 </div>
 </div>
 <div class="flex flex-col gap-6 md:gap-8 lg:w-1/2">
-<div class="flex flex-col gap-4 md:gap-5 text-center lg:text-left">
+<!-- Stats - 모바일에서 맨 위에 표시 -->
+<div class="hero-animate order-first md:order-last flex flex-wrap gap-6 md:gap-8 pb-6 md:pb-0 md:mt-4 md:pt-8 border-b md:border-b-0 md:border-t border-gray-200 dark:border-gray-700 justify-center lg:justify-start">
+<div class="flex flex-col items-center lg:items-start">
+<span class="text-2xl md:text-4xl font-black stat-number count-up" data-target="5" data-suffix="분">0</span>
+<span class="text-xs md:text-sm text-text-secondary dark:text-gray-400">간편한 초기 설정</span>
+</div>
+<div class="flex flex-col items-center lg:items-start">
+<span class="text-2xl md:text-4xl font-black stat-number count-up" data-target="24" data-suffix="/7">0</span>
+<span class="text-xs md:text-sm text-text-secondary dark:text-gray-400">실시간 건강 모니터링</span>
+</div>
+<div class="flex flex-col items-center lg:items-start">
+<span class="text-2xl md:text-4xl font-black stat-number count-up" data-target="100" data-suffix="%">0</span>
+<span class="text-xs md:text-sm text-text-secondary dark:text-gray-400">데이터 보안</span>
+</div>
+</div>
+<div class="flex flex-col gap-4 md:gap-5 text-center lg:text-left order-2 md:order-first">
 <span class="hero-animate inline-flex items-center gap-2 text-primary text-xs md:text-sm font-semibold tracking-wider uppercase justify-center lg:justify-start">
 <span class="w-6 md:w-8 h-[2px] gradient-bg"></span>
 디지털 헬스케어 솔루션
@@ -337,26 +352,11 @@
 향상된 환자 케어와 운영 효율성을 위한 약국의 올인원 디지털 파트너입니다.
 </p>
 </div>
-<div class="hero-animate hero-animate-delay-3 flex justify-center lg:justify-start">
+<div class="hero-animate hero-animate-delay-3 flex justify-center lg:justify-start order-3">
 <button id="open-gallery-btn" class="shimmer flex items-center justify-center gap-2 rounded-full h-12 md:h-14 px-6 md:px-8 gradient-bg text-white text-sm md:text-base font-bold shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 transition-all duration-300 hover:scale-105">
 <span>시작하기</span>
 <span class="material-symbols-outlined text-lg md:text-xl">arrow_forward</span>
 </button>
-</div>
-<!-- Stats -->
-<div class="hero-animate hero-animate-delay-4 flex flex-wrap gap-6 md:gap-8 mt-2 md:mt-4 pt-6 md:pt-8 border-t border-gray-200 dark:border-gray-700 justify-center lg:justify-start">
-<div class="flex flex-col items-center lg:items-start">
-<span class="text-2xl md:text-4xl font-black stat-number count-up" data-target="500" data-suffix="+">0</span>
-<span class="text-xs md:text-sm text-text-secondary dark:text-gray-400">파트너 약국</span>
-</div>
-<div class="flex flex-col items-center lg:items-start">
-<span class="text-2xl md:text-4xl font-black stat-number count-up" data-target="98" data-suffix="%">0</span>
-<span class="text-xs md:text-sm text-text-secondary dark:text-gray-400">고객 만족도</span>
-</div>
-<div class="flex flex-col items-center lg:items-start">
-<span class="text-2xl md:text-4xl font-black stat-number count-up" data-target="30" data-suffix="%">0</span>
-<span class="text-xs md:text-sm text-text-secondary dark:text-gray-400">업무 효율 향상</span>
-</div>
 </div>
 </div>
 </div>
@@ -1004,7 +1004,7 @@ function animateCountUp() {
 }
 
 // Trigger count up when stats section is visible
-const statsSection = document.querySelector('.hero-animate-delay-4');
+const statsSection = document.querySelector('.order-first');
 let countUpTriggered = false;
 
 const countObserver = new IntersectionObserver((entries) => {
