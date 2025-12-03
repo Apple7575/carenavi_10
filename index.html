@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>케어 내비 서비스 소개</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#3D8BF2",
+              "primary-dark": "#2563EB",
+              "background-light": "#EEF9FD",
+              "background-dark": "#102216",
+              "text-primary": "#1A202C",
+              "text-secondary": "#4A5568",
+            },
+            fontFamily: {
+              "display": ["Noto Sans KR", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+            animation: {
+              'fade-in': 'fadeIn 0.6s ease-out forwards',
+              'fade-in-up': 'fadeInUp 0.6s ease-out forwards',
+              'float': 'float 3s ease-in-out infinite',
+              'pulse-soft': 'pulseSoft 2s ease-in-out infinite',
+            },
+            keyframes: {
+              fadeIn: {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' },
+              },
+              fadeInUp: {
+                '0%': { opacity: '0', transform: 'translateY(30px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-10px)' },
+              },
+              pulseSoft: {
+                '0%, 100%': { opacity: '1' },
+                '50%': { opacity: '0.7' },
+              },
+            },
+          },
+        },
+      }
+    </script>
+<style>
+      html {
+        scroll-behavior: smooth;
+      }
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .gradient-text {
+        background: linear-gradient(135deg, #3D8BF2 0%, #6366F1 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .gradient-bg {
+        background: linear-gradient(135deg, #3D8BF2 0%, #6366F1 100%);
+      }
+      .card-hover {
+        transition: all 0.3s ease;
+      }
+      .card-hover:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(61, 139, 242, 0.15);
+      }
+      .nav-link {
+        position: relative;
+      }
+      .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(135deg, #3D8BF2 0%, #6366F1 100%);
+        transition: width 0.3s ease;
+      }
+      .nav-link:hover::after {
+        width: 100%;
+      }
+      .hero-pattern {
+        background-image: radial-gradient(circle at 1px 1px, rgba(61, 139, 242, 0.1) 1px, transparent 0);
+        background-size: 40px 40px;
+      }
+      .glass-effect {
+        backdrop-filter: blur(12px);
+        background: rgba(255, 255, 255, 0.8);
+      }
+      .dark .glass-effect {
+        background: rgba(16, 34, 22, 0.8);
+      }
+      .animate-on-scroll {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      }
+      .animate-on-scroll.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .stat-number {
+        background: linear-gradient(135deg, #3D8BF2 0%, #6366F1 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      /* Mobile menu styles */
+      .mobile-menu {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out;
+      }
+      .mobile-menu.open {
+        max-height: 300px;
+      }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-primary dark:text-gray-200">
+<div class="relative flex min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<!-- Header -->
+<header class="sticky top-0 z-50 w-full glass-effect border-b border-solid border-gray-200/50 dark:border-gray-800/50">
+<div class="flex items-center justify-between whitespace-nowrap px-4 sm:px-8 lg:px-10 py-4 max-w-7xl mx-auto">
+<a href="#" class="flex items-center gap-3 text-text-primary dark:text-white group">
+<div class="size-8 text-primary transition-transform duration-300 group-hover:scale-110">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M24.0002 4.18848L43.0157 11.6523C44.2063 12.0806 45.0002 13.21 45.0002 14.4752V35.3665C45.0002 37.0198 43.983 38.5028 42.4406 39.0982L25.0805 45.7989C24.3853 46.0673 23.6151 46.0673 22.92 45.7989L5.55982 39.0982C4.01739 38.5028 3.0002 37.0198 3.0002 35.3665V14.4752C3.0002 13.21 3.7941 12.0806 4.98474 11.6523L24.0002 4.18848Z" fill="currentColor"></path>
+<path d="M24 8.18819L33.4123 11.574L24 15.2071L14.5877 11.574L24 8.18819Z" fill="white" fill-opacity="0.5"></path>
+<path d="M21 20.4805V37.6263L9 32.9945V15.8487L21 20.4805Z" fill="white" fill-opacity="0.5"></path>
+<path d="M27 37.6263V20.4805L39 15.8487V32.9945L27 37.6263Z" fill="white" fill-opacity="0.5"></path>
+<path d="M42 11.475V34.3663C42 34.7796 41.7457 35.1504 41.3601 35.2992L24 42V18.4228L42 11.475Z" fill="white"></path>
+</svg>
+</div>
+<h2 class="text-text-primary dark:text-white text-xl font-bold leading-tight tracking-[-0.015em]">케어 내비</h2>
+</a>
+<div class="hidden md:flex flex-1 justify-end gap-8">
+<nav class="flex items-center gap-8">
+<a class="nav-link text-text-primary dark:text-gray-300 dark:hover:text-white text-sm font-medium leading-normal transition-colors" href="#solution">솔루션</a>
+<a class="nav-link text-text-primary dark:text-gray-300 dark:hover:text-white text-sm font-medium leading-normal transition-colors" href="#features">핵심 기능</a>
+<a class="nav-link text-text-primary dark:text-gray-300 dark:hover:text-white text-sm font-medium leading-normal transition-colors" href="#premium">프리미엄</a>
+<a class="nav-link text-text-primary dark:text-gray-300 dark:hover:text-white text-sm font-medium leading-normal transition-colors" href="#faq">FAQ</a>
+</nav>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-11 px-6 gradient-bg text-white text-sm font-bold leading-normal tracking-[0.015em] shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 transition-all duration-300 hover:scale-105">
+<span class="truncate">도입 문의</span>
+</button>
+</div>
+<button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+<span class="material-symbols-outlined text-3xl">menu</span>
+</button>
+</div>
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="mobile-menu md:hidden border-t border-gray-200 dark:border-gray-800">
+<nav class="flex flex-col px-4 py-4 gap-4">
+<a class="text-text-primary dark:text-gray-300 text-base font-medium py-2" href="#solution" onclick="closeMobileMenu()">솔루션</a>
+<a class="text-text-primary dark:text-gray-300 text-base font-medium py-2" href="#features" onclick="closeMobileMenu()">핵심 기능</a>
+<a class="text-text-primary dark:text-gray-300 text-base font-medium py-2" href="#premium" onclick="closeMobileMenu()">프리미엄</a>
+<a class="text-text-primary dark:text-gray-300 text-base font-medium py-2" href="#faq" onclick="closeMobileMenu()">FAQ</a>
+<button class="w-full gradient-bg text-white text-sm font-bold py-3 rounded-full mt-2">도입 문의</button>
+</nav>
+</div>
+</header>
+
+<main class="flex-1">
+<!-- Hero Section -->
+<section class="py-20 md:py-32 hero-pattern relative overflow-hidden">
+<div class="absolute top-20 right-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl animate-pulse-soft"></div>
+<div class="absolute bottom-10 left-10 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl animate-pulse-soft" style="animation-delay: 1s;"></div>
+<div class="max-w-7xl mx-auto px-4 sm:px-8 lg:px-10 relative z-10">
+<div class="@container">
+<div class="flex flex-col gap-10 lg:flex-row-reverse lg:items-center">
+<div class="w-full lg:w-1/2 animate-float">
+<div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-2xl shadow-2xl shadow-primary/20" data-alt="A clean, abstract graphic representing data and health" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDGj6TdGyuj11_eOVBxJO12Ui1HbG1zh1y5D3Krm13LY1-Vrytlbsn0wL2fsI_VNjWVj_qSIGYz8Bg1RZ_6Bn_tF3f7sMo_NMTVaq5mwpr8DgMwoYAmEXUGw9gtYIxgVJXt-jA0cljPGiXN08EO10zsmO9dNO5DityTdej8bMUvvQsAzXW_ymLeAMeHXVJqTdSU67WWILpgrvz3f7hm1qoqAUCvZT0ozO1yHC2X_8QZvw-JqKv71XgRwx6LuIrY0adG1lP25QF8epXY");'></div>
+</div>
+<div class="flex flex-col gap-8 lg:w-1/2">
+<div class="flex flex-col gap-5 text-left">
+<span class="inline-flex items-center gap-2 text-primary text-sm font-semibold tracking-wider uppercase">
+<span class="w-8 h-[2px] gradient-bg"></span>
+디지털 헬스케어 솔루션
+</span>
+<h1 class="text-text-primary dark:text-white text-4xl md:text-5xl lg:text-6xl font-black leading-tight tracking-[-0.033em]">
+약국 기반 건강 관리,<br/>
+<span class="gradient-text">CareNavi</span>로 간편하게
+</h1>
+<p class="text-text-secondary dark:text-gray-300 text-lg md:text-xl font-normal leading-relaxed max-w-xl">
+향상된 환자 케어와 운영 효율성을 위한 약국의 올인원 디지털 파트너입니다.
+</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<button class="flex items-center justify-center gap-2 rounded-full h-14 px-8 gradient-bg text-white text-base font-bold shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 transition-all duration-300 hover:scale-105">
+<span>시작하기</span>
+<span class="material-symbols-outlined text-xl">arrow_forward</span>
+</button>
+<button class="flex items-center justify-center gap-2 rounded-full h-14 px-8 bg-white dark:bg-gray-800 text-text-primary dark:text-white text-base font-bold border-2 border-gray-200 dark:border-gray-700 hover:border-primary dark:hover:border-primary transition-all duration-300">
+<span class="material-symbols-outlined text-xl text-primary">play_circle</span>
+<span>데모 영상 보기</span>
+</button>
+</div>
+<!-- Stats -->
+<div class="flex flex-wrap gap-8 mt-4 pt-8 border-t border-gray-200 dark:border-gray-700">
+<div class="flex flex-col">
+<span class="text-3xl md:text-4xl font-black stat-number">500+</span>
+<span class="text-sm text-text-secondary dark:text-gray-400">파트너 약국</span>
+</div>
+<div class="flex flex-col">
+<span class="text-3xl md:text-4xl font-black stat-number">98%</span>
+<span class="text-sm text-text-secondary dark:text-gray-400">고객 만족도</span>
+</div>
+<div class="flex flex-col">
+<span class="text-3xl md:text-4xl font-black stat-number">30%</span>
+<span class="text-sm text-text-secondary dark:text-gray-400">업무 효율 향상</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Problems Section -->
+<section id="solution" class="py-20 md:py-28 bg-white dark:bg-background-dark/50 scroll-mt-20">
+<div class="max-w-7xl mx-auto px-4 sm:px-8 lg:px-10">
+<div class="text-center mb-16 animate-on-scroll">
+<span class="inline-flex items-center gap-2 text-primary text-sm font-semibold tracking-wider uppercase mb-4">
+<span class="w-8 h-[2px] gradient-bg"></span>
+문제 인식
+<span class="w-8 h-[2px] gradient-bg"></span>
+</span>
+<h2 class="text-text-primary dark:text-white text-3xl md:text-4xl font-bold leading-tight tracking-[-0.015em] mb-4">현대 약국이 마주한 문제점</h2>
+<p class="text-text-secondary dark:text-gray-400 text-lg max-w-2xl mx-auto">케어 내비가 해결하고자 하는 약국 현장의 핵심 과제들입니다.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="card-hover flex flex-1 flex-col gap-5 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-background-dark p-8 text-center items-center animate-on-scroll">
+<div class="text-primary bg-gradient-to-br from-primary/20 to-indigo-500/20 rounded-2xl p-4"><span class="material-symbols-outlined text-4xl">medication</span></div>
+<div class="flex flex-col gap-2">
+<h3 class="text-text-primary dark:text-white text-xl font-bold leading-tight">낮은 복약 순응도</h3>
+<p class="text-text-secondary dark:text-gray-400 text-base font-normal leading-relaxed">환자들은 복잡한 복약 스케줄 관리에 어려움을 겪으며, 이는 부정적인 건강 결과로 이어집니다.</p>
+</div>
+</div>
+<div class="card-hover flex flex-1 flex-col gap-5 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-background-dark p-8 text-center items-center animate-on-scroll" style="animation-delay: 0.1s;">
+<div class="text-primary bg-gradient-to-br from-primary/20 to-indigo-500/20 rounded-2xl p-4"><span class="material-symbols-outlined text-4xl">forum</span></div>
+<div class="flex flex-col gap-2">
+<h3 class="text-text-primary dark:text-white text-xl font-bold leading-tight">비효율적인 환자 소통</h3>
+<p class="text-text-secondary dark:text-gray-400 text-base font-normal leading-relaxed">시간이 많이 소요되는 전화 상담과 수동적인 후속 조치는 약국 직원의 업무에 병목 현상을 만듭니다.</p>
+</div>
+</div>
+<div class="card-hover flex flex-1 flex-col gap-5 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-background-dark p-8 text-center items-center animate-on-scroll" style="animation-delay: 0.2s;">
+<div class="text-primary bg-gradient-to-br from-primary/20 to-indigo-500/20 rounded-2xl p-4"><span class="material-symbols-outlined text-4xl">scatter_plot</span></div>
+<div class="flex flex-col gap-2">
+<h3 class="text-text-primary dark:text-white text-xl font-bold leading-tight">파편화된 건강 데이터</h3>
+<p class="text-text-secondary dark:text-gray-400 text-base font-normal leading-relaxed">통합된 데이터의 부재는 선제적이고 개인화된 환자 케어를 제공하는 것을 어렵게 만듭니다.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Solution Intro -->
+<section class="py-20 md:py-28 relative overflow-hidden">
+<div class="absolute inset-0 hero-pattern opacity-50"></div>
+<div class="max-w-4xl mx-auto px-4 sm:px-8 lg:px-10 text-center relative z-10 animate-on-scroll">
+<span class="inline-flex items-center gap-2 text-primary text-sm font-semibold tracking-wider uppercase mb-4">
+<span class="w-8 h-[2px] gradient-bg"></span>
+솔루션
+<span class="w-8 h-[2px] gradient-bg"></span>
+</span>
+<h2 class="text-text-primary dark:text-white text-3xl md:text-4xl font-bold leading-tight tracking-[-0.015em] mb-6">케어 내비: 약국의 디지털 파트너</h2>
+<p class="text-text-secondary dark:text-gray-300 text-lg md:text-xl leading-relaxed">케어 내비는 복약 관리, 안전한 소통, 데이터 기반 인사이트를 위한 통합 플랫폼을 제공하여 약국 운영을 간소화하고 환자 참여를 향상시킵니다. 더 높은 효율성으로 우수한 케어를 제공할 수 있도록 약국을 지원합니다.</p>
+</div>
+</section>
+
+<!-- Differentiators -->
+<section class="py-20 md:py-28 bg-white dark:bg-background-dark/50">
+<div class="max-w-7xl mx-auto px-4 sm:px-8 lg:px-10">
+<div class="text-center mb-16 animate-on-scroll">
+<span class="inline-flex items-center gap-2 text-primary text-sm font-semibold tracking-wider uppercase mb-4">
+<span class="w-8 h-[2px] gradient-bg"></span>
+차별점
+<span class="w-8 h-[2px] gradient-bg"></span>
+</span>
+<h2 class="text-text-primary dark:text-white text-3xl md:text-4xl font-bold leading-tight tracking-[-0.015em]">케어 내비의 핵심 차별점</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="card-hover flex flex-col gap-4 rounded-2xl p-8 bg-gradient-to-br from-primary/5 to-indigo-500/5 border border-primary/10 animate-on-scroll">
+<div class="w-14 h-14 rounded-xl gradient-bg flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl text-white">integration_instructions</span>
+</div>
+<h3 class="text-text-primary dark:text-white text-xl font-bold leading-tight">원활한 시스템 연동</h3>
+<p class="text-text-secondary dark:text-gray-400 text-base font-normal leading-relaxed">기존 약국 관리 시스템과 쉽게 연동되어 원활한 전환과 업무 연속성을 보장합니다.</p>
+</div>
+<div class="card-hover flex flex-col gap-4 rounded-2xl p-8 bg-gradient-to-br from-primary/5 to-indigo-500/5 border border-primary/10 animate-on-scroll" style="animation-delay: 0.1s;">
+<div class="w-14 h-14 rounded-xl gradient-bg flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl text-white">person</span>
+</div>
+<h3 class="text-text-primary dark:text-white text-xl font-bold leading-tight">환자 중심 디자인</h3>
+<p class="text-text-secondary dark:text-gray-400 text-base font-normal leading-relaxed">환자를 위한 직관적이고 접근하기 쉬운 인터페이스로 건강 관리에 대한 적극적인 참여를 촉진합니다.</p>
+</div>
+<div class="card-hover flex flex-col gap-4 rounded-2xl p-8 bg-gradient-to-br from-primary/5 to-indigo-500/5 border border-primary/10 animate-on-scroll" style="animation-delay: 0.2s;">
+<div class="w-14 h-14 rounded-xl gradient-bg flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl text-white">analytics</span>
+</div>
+<h3 class="text-text-primary dark:text-white text-xl font-bold leading-tight">실행 가능한 데이터 인사이트</h3>
+<p class="text-text-secondary dark:text-gray-400 text-base font-normal leading-relaxed">강력한 분석 기능은 복약 순응도 추세와 환자 행동에 대한 인사이트를 제공하여 선제적인 케어를 가능하게 합니다.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="py-20 md:py-28 scroll-mt-20">
+<div class="max-w-7xl mx-auto px-4 sm:px-8 lg:px-10">
+<div class="flex flex-col lg:flex-row gap-12 lg:gap-16 items-center">
+<div class="lg:w-1/2 animate-on-scroll">
+<span class="inline-flex items-center gap-2 text-primary text-sm font-semibold tracking-wider uppercase mb-4">
+<span class="w-8 h-[2px] gradient-bg"></span>
+핵심 기능
+</span>
+<h2 class="text-3xl md:text-4xl font-bold mb-8 text-text-primary dark:text-white">강력하고 직관적인<br/>주요 기능</h2>
+<div class="space-y-6">
+<div class="card-hover flex gap-4 p-5 rounded-xl bg-white dark:bg-background-dark border border-gray-200 dark:border-gray-800">
+<div class="w-12 h-12 rounded-lg gradient-bg flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-2xl text-white">notifications_active</span>
+</div>
+<div>
+<h3 class="text-lg font-bold text-text-primary dark:text-white mb-1">맞춤형 복약 알림</h3>
+<p class="text-text-secondary dark:text-gray-400">환자별 맞춤 알림으로 복약 순응도를 높이고 치료 효과를 극대화합니다.</p>
+</div>
+</div>
+<div class="card-hover flex gap-4 p-5 rounded-xl bg-white dark:bg-background-dark border border-gray-200 dark:border-gray-800">
+<div class="w-12 h-12 rounded-lg gradient-bg flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-2xl text-white">monitoring</span>
+</div>
+<div>
+<h3 class="text-lg font-bold text-text-primary dark:text-white mb-1">실시간 건강 모니터링</h3>
+<p class="text-text-secondary dark:text-gray-400">환자의 건강 데이터를 실시간으로 추적하여 이상 징후를 조기에 발견하고 대응합니다.</p>
+</div>
+</div>
+<div class="card-hover flex gap-4 p-5 rounded-xl bg-white dark:bg-background-dark border border-gray-200 dark:border-gray-800">
+<div class="w-12 h-12 rounded-lg gradient-bg flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-2xl text-white">lock</span>
+</div>
+<div>
+<h3 class="text-lg font-bold text-text-primary dark:text-white mb-1">안전한 1:1 상담</h3>
+<p class="text-text-secondary dark:text-gray-400">보안 메시징 기능을 통해 환자와 약사가 언제 어디서든 안전하게 소통할 수 있습니다.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="lg:w-1/2 animate-on-scroll" style="animation-delay: 0.2s;">
+<div class="relative">
+<div class="absolute -inset-4 bg-gradient-to-r from-primary/20 to-indigo-500/20 rounded-3xl blur-2xl"></div>
+<div class="relative w-full h-[450px] rounded-2xl bg-cover bg-center shadow-2xl" data-alt="Screenshot of the Care Navi dashboard on a desktop computer, showing charts and patient information." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC5QO0vgTZXGLYZIQ2xn4QSNGbg-DlNTghyP75PEL7FuPXXSkFWEhZzRlZRIoq0j764E7UsooV-ukoU1MFKchovA5z3Z3KAiJUOQT0VO4GJH8nKgO-UzFMAaDid_0QuvxzG-SskqAczwW9m8s0ncoUlHg-Rm67Rgvf0BABhMlM1Yd62KjRNI2O15cRvHEX_2K6t0dD6JrziqnJ_JSkY6NaBduiZAhZ19QNcZ76moHXS0AlbFWWGWilESl6LdXliM5llbfS9gT8ZvlDN')"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Premium Section -->
+<section id="premium" class="py-20 md:py-28 bg-white dark:bg-background-dark/50 scroll-mt-20">
+<div class="max-w-4xl mx-auto px-4 sm:px-8 lg:px-10 text-center">
+<div class="animate-on-scroll">
+<span class="inline-flex items-center gap-2 text-primary text-sm font-semibold tracking-wider uppercase mb-4">
+<span class="w-8 h-[2px] gradient-bg"></span>
+프리미엄
+<span class="w-8 h-[2px] gradient-bg"></span>
+</span>
+<h2 class="text-3xl md:text-4xl font-bold mb-4 text-text-primary dark:text-white">프리미엄 서비스</h2>
+<p class="text-lg mb-10 text-text-secondary dark:text-gray-300">기본 기능을 넘어, 약국과 환자 모두를 위한 특별한 프리미엄 서비스를 경험해 보세요.</p>
+</div>
+<div class="relative animate-on-scroll" style="animation-delay: 0.1s;">
+<div class="absolute -inset-1 bg-gradient-to-r from-primary to-indigo-500 rounded-2xl blur opacity-25"></div>
+<div class="relative p-10 rounded-2xl bg-gradient-to-br from-primary/10 to-indigo-500/10 border border-primary/20 backdrop-blur">
+<div class="w-16 h-16 rounded-2xl gradient-bg flex items-center justify-center mx-auto mb-6">
+<span class="material-symbols-outlined text-4xl text-white">auto_awesome</span>
+</div>
+<h3 class="text-2xl md:text-3xl font-bold gradient-text mb-4">AI 기반 건강 리포트</h3>
+<p class="text-text-secondary dark:text-gray-400 text-lg leading-relaxed max-w-2xl mx-auto">환자의 건강 데이터를 분석하여 개인 맞춤형 건강 리포트를 월별로 제공합니다. 이를 통해 환자는 자신의 건강 상태를 더 잘 이해하고, 약사는 더 정밀한 상담을 제공할 수 있습니다.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Revenue Model -->
+<section class="py-20 md:py-28">
+<div class="max-w-7xl mx-auto px-4 sm:px-8 lg:px-10">
+<div class="flex flex-col lg:flex-row-reverse gap-12 lg:gap-16 items-center">
+<div class="lg:w-1/2 animate-on-scroll">
+<span class="inline-flex items-center gap-2 text-primary text-sm font-semibold tracking-wider uppercase mb-4">
+<span class="w-8 h-[2px] gradient-bg"></span>
+비즈니스 모델
+</span>
+<h2 class="text-3xl md:text-4xl font-bold mb-4 text-text-primary dark:text-white">수익 구조</h2>
+<p class="text-lg mb-8 text-text-secondary dark:text-gray-400">케어 내비는 약국의 성공이 곧 우리의 성공이라는 믿음 아래, 합리적이고 투명한 수익 모델을 제공합니다.</p>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+<div class="card-hover bg-white dark:bg-background-dark p-6 rounded-2xl border border-gray-200 dark:border-gray-800">
+<div class="w-12 h-12 rounded-lg gradient-bg flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-2xl text-white">payments</span>
+</div>
+<h3 class="font-bold text-primary text-lg mb-2">기본 구독료</h3>
+<p class="text-sm text-text-secondary dark:text-gray-400">플랫폼 이용을 위한 월간 또는 연간 기본 구독료입니다.</p>
+</div>
+<div class="card-hover bg-white dark:bg-background-dark p-6 rounded-2xl border border-gray-200 dark:border-gray-800">
+<div class="w-12 h-12 rounded-lg gradient-bg flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-2xl text-white">handshake</span>
+</div>
+<h3 class="font-bold text-primary text-lg mb-2">프리미엄 서비스 수수료</h3>
+<p class="text-sm text-text-secondary dark:text-gray-400">환자가 프리미엄 기능을 이용할 경우 발생하는 수익의 일부를 공유합니다.</p>
+</div>
+</div>
+</div>
+<div class="lg:w-1/2 animate-on-scroll" style="animation-delay: 0.2s;">
+<div class="relative">
+<div class="absolute -inset-4 bg-gradient-to-r from-primary/20 to-indigo-500/20 rounded-3xl blur-2xl"></div>
+<div class="relative w-full h-[400px] bg-cover bg-center rounded-2xl shadow-2xl" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuClfs8gTi_NGjkeKGk3eFU22z9TGCWNk-tiQYJxJXwMO1AJ8FhiZl2Cpaezm8LrsOg5gxs3xUMSlDItkpPZ7Nj5SHnoVK_VdmRMD1y5_QmyrA4zLJm03F9xIf6eI06FSb7Ruf9_O9JHAYj-GTaZOh6xfbMT8urrWEcpsg-waiH2VIQmMXSQfa2q7A0rUeRshIhhBQJLWFJMBT5BHLg0gr_laR1b6734yCgTSNw-48uvNlU8GNbhJNm5xnAMyfMY6JLOQmVMPZyjAHD6')"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- UI Demo Section -->
+<section class="py-20 md:py-28 bg-white dark:bg-background-dark/50">
+<div class="max-w-7xl mx-auto px-4 sm:px-8 lg:px-10">
+<div class="text-center mb-12 animate-on-scroll">
+<span class="inline-flex items-center gap-2 text-primary text-sm font-semibold tracking-wider uppercase mb-4">
+<span class="w-8 h-[2px] gradient-bg"></span>
+UI 데모
+<span class="w-8 h-[2px] gradient-bg"></span>
+</span>
+<h2 class="text-3xl md:text-4xl font-bold text-text-primary dark:text-white">직관적인 사용자 경험</h2>
+</div>
+<div class="animate-on-scroll" style="animation-delay: 0.1s;">
+<div class="relative">
+<div class="absolute -inset-4 bg-gradient-to-r from-primary/20 to-indigo-500/20 rounded-3xl blur-2xl"></div>
+<div class="relative w-full h-[600px] rounded-2xl bg-cover bg-center shadow-2xl border border-gray-200 dark:border-gray-800" data-alt="UI Demo of the Care Navi application on a mobile phone" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC2uxuWoZewN7vXtBcVUgKiCeqWb6ICToBCbQBelUY_LIZTA4Fs_mhwdCJNzt8fnCFL-6lfdeE5iI9MLmFOdtDyeTTvj8aeCs0jsA-d1baC9vCp35jIEepjxAQsMJa-KTE0nIV-ZTCNALorPpTWr6yPOU0eHh-iPCesCF34kr0gVgaUEt2MzRz8_x1kzC4WM8tIHXZaa0jxb6nsIzqGNBtEVIGVKWtsPa8sh5ejGj8wFBqsSvzbfl3S5PsLci9b_86FbPEDdkEZVFF1')"></div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- FAQ Section -->
+<section id="faq" class="py-20 md:py-28 scroll-mt-20">
+<div class="max-w-4xl mx-auto px-4 sm:px-8 lg:px-10">
+<div class="text-center mb-12 animate-on-scroll">
+<span class="inline-flex items-center gap-2 text-primary text-sm font-semibold tracking-wider uppercase mb-4">
+<span class="w-8 h-[2px] gradient-bg"></span>
+FAQ
+<span class="w-8 h-[2px] gradient-bg"></span>
+</span>
+<h2 class="text-text-primary dark:text-white text-3xl md:text-4xl font-bold leading-tight tracking-[-0.015em]">자주 묻는 질문</h2>
+</div>
+<div class="space-y-4 animate-on-scroll" style="animation-delay: 0.1s;">
+<details class="group p-6 rounded-2xl bg-white dark:bg-background-dark/50 border border-gray-200 dark:border-gray-800 cursor-pointer card-hover">
+<summary class="flex items-center justify-between font-bold text-lg text-text-primary dark:text-white">
+케어 내비는 개인정보보호 규정을 준수하나요?
+<span class="material-symbols-outlined transition-transform duration-300 group-open:rotate-180 text-primary">expand_more</span>
+</summary>
+<p class="mt-4 text-text-secondary dark:text-gray-400 leading-relaxed">네, 케어 내비 플랫폼은 개인정보보호법 등 관련 법규를 철저히 준수합니다. 저희는 환자의 데이터 보안과 개인정보 보호를 최우선으로 생각하며, 은행 수준의 암호화와 강력한 보안 프로토콜을 사용하여 모든 민감한 건강 정보를 보호합니다.</p>
+</details>
+<details class="group p-6 rounded-2xl bg-white dark:bg-background-dark/50 border border-gray-200 dark:border-gray-800 cursor-pointer card-hover">
+<summary class="flex items-center justify-between font-bold text-lg text-text-primary dark:text-white">
+시스템 도입 및 연동에 얼마나 걸리나요?
+<span class="material-symbols-outlined transition-transform duration-300 group-open:rotate-180 text-primary">expand_more</span>
+</summary>
+<p class="mt-4 text-text-secondary dark:text-gray-400 leading-relaxed">저희의 도입 프로세스는 효율적이고 업무 중단을 최소화하도록 설계되었습니다. 기존 약국 관리 시스템과의 연동을 포함한 표준 설정은 보통 전담 지원팀의 안내에 따라 2주에서 4주 정도 소요됩니다.</p>
+</details>
+<details class="group p-6 rounded-2xl bg-white dark:bg-background-dark/50 border border-gray-200 dark:border-gray-800 cursor-pointer card-hover">
+<summary class="flex items-center justify-between font-bold text-lg text-text-primary dark:text-white">
+어떤 종류의 기술 지원을 제공하나요?
+<span class="material-symbols-outlined transition-transform duration-300 group-open:rotate-180 text-primary">expand_more</span>
+</summary>
+<p class="mt-4 text-text-secondary dark:text-gray-400 leading-relaxed">초기 설정, 직원 교육, 지속적인 기술 지원을 포함한 포괄적인 지원을 제공합니다. 저희 지원팀은 이메일, 전화, 전용 헬프데스크 포털을 통해 약국이 케어 내비를 최대한 활용할 수 있도록 돕고 있습니다.</p>
+</details>
+</div>
+</div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-20 md:py-28 relative overflow-hidden">
+<div class="absolute inset-0 gradient-bg opacity-95"></div>
+<div class="absolute inset-0 hero-pattern opacity-10"></div>
+<div class="max-w-4xl mx-auto px-4 sm:px-8 lg:px-10 text-center relative z-10">
+<h2 class="text-white text-3xl md:text-4xl font-bold mb-6">지금 바로 케어 내비와 함께<br/>약국의 미래를 시작하세요</h2>
+<p class="text-white/80 text-lg mb-10 max-w-2xl mx-auto">더 효율적인 운영, 더 나은 환자 케어를 위한 첫 걸음을 내딛으세요.</p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center">
+<button class="flex items-center justify-center gap-2 rounded-full h-14 px-8 bg-white text-primary text-base font-bold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+<span>무료 상담 신청</span>
+<span class="material-symbols-outlined text-xl">arrow_forward</span>
+</button>
+<button class="flex items-center justify-center gap-2 rounded-full h-14 px-8 bg-white/10 text-white text-base font-bold border-2 border-white/30 hover:bg-white/20 transition-all duration-300">
+<span class="material-symbols-outlined text-xl">download</span>
+<span>브로슈어 다운로드</span>
+</button>
+</div>
+</div>
+</section>
+</main>
+
+<!-- Footer -->
+<footer class="bg-text-primary text-white">
+<div class="max-w-7xl mx-auto px-4 sm:px-8 lg:px-10 py-16">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+<div class="md:col-span-1">
+<div class="flex items-center gap-3 mb-6">
+<div class="size-8 text-primary">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M24.0002 4.18848L43.0157 11.6523C44.2063 12.0806 45.0002 13.21 45.0002 14.4752V35.3665C45.0002 37.0198 43.983 38.5028 42.4406 39.0982L25.0805 45.7989C24.3853 46.0673 23.6151 46.0673 22.92 45.7989L5.55982 39.0982C4.01739 38.5028 3.0002 37.0198 3.0002 35.3665V14.4752C3.0002 13.21 3.7941 12.0806 4.98474 11.6523L24.0002 4.18848Z" fill="currentColor"></path>
+</svg>
+</div>
+<h3 class="text-xl font-bold">케어 내비</h3>
+</div>
+<p class="text-gray-400 leading-relaxed">기술을 통해 환자 케어를 향상시킵니다. 약국과 환자를 연결하는 혁신적인 디지털 헬스케어 플랫폼입니다.</p>
+</div>
+<div>
+<h4 class="font-bold mb-6 text-lg">제품</h4>
+<ul class="space-y-3 text-gray-400">
+<li><a class="hover:text-white transition-colors" href="#features">핵심 기능</a></li>
+<li><a class="hover:text-white transition-colors" href="#premium">프리미엄</a></li>
+<li><a class="hover:text-white transition-colors" href="#">보안</a></li>
+<li><a class="hover:text-white transition-colors" href="#">도입 문의</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold mb-6 text-lg">회사</h4>
+<ul class="space-y-3 text-gray-400">
+<li><a class="hover:text-white transition-colors" href="#">회사 소개</a></li>
+<li><a class="hover:text-white transition-colors" href="#">채용</a></li>
+<li><a class="hover:text-white transition-colors" href="#">문의하기</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold mb-6 text-lg">법률</h4>
+<ul class="space-y-3 text-gray-400">
+<li><a class="hover:text-white transition-colors" href="#">개인정보 처리방침</a></li>
+<li><a class="hover:text-white transition-colors" href="#">서비스 이용약관</a></li>
+</ul>
+</div>
+</div>
+<div class="mt-16 pt-8 border-t border-gray-800 flex flex-col md:flex-row items-center justify-between gap-4">
+<p class="text-gray-500 text-sm">© 2024 Care Navi. All rights reserved.</p>
+<div class="flex gap-4">
+<a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition-colors">
+<span class="material-symbols-outlined text-xl">mail</span>
+</a>
+<a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition-colors">
+<span class="material-symbols-outlined text-xl">phone</span>
+</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+</div>
+
+<script>
+// Mobile menu toggle
+const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+const mobileMenu = document.getElementById('mobile-menu');
+
+mobileMenuBtn.addEventListener('click', () => {
+  mobileMenu.classList.toggle('open');
+});
+
+function closeMobileMenu() {
+  mobileMenu.classList.remove('open');
+}
+
+// Scroll animations
+const observerOptions = {
+  threshold: 0.1,
+  rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, observerOptions);
+
+document.querySelectorAll('.animate-on-scroll').forEach(el => {
+  observer.observe(el);
+});
+
+// Active nav link highlighting
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('nav a[href^="#"]');
+
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop;
+    if (window.scrollY >= sectionTop - 100) {
+      current = section.getAttribute('id');
+    }
+  });
+
+  navLinks.forEach(link => {
+    link.classList.remove('text-primary');
+    if (link.getAttribute('href') === '#' + current) {
+      link.classList.add('text-primary');
+    }
+  });
+});
+</script>
+</body></html>
